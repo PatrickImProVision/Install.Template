@@ -25,10 +25,8 @@ class Filters extends BaseFilters
      * or [filter_name => [classname1, classname2, ...]]
      */
     public array $aliases = [
+        'installguard'  => \App\Filters\InstallGuard::class,
         'csrf'          => CSRF::class,
-        'installationrequired' => \App\Filters\InstallationRequired::class,
-        'installationdone'     => \App\Filters\InstallationDone::class,
-        'adminauth'     => \App\Filters\AdminAuth::class,
         'toolbar'       => DebugToolbar::class,
         'honeypot'      => Honeypot::class,
         'invalidchars'  => InvalidChars::class,
@@ -55,8 +53,10 @@ class Filters extends BaseFilters
     public array $required = [
         'before' => [
             'forcehttps', // Force Global Secure Requests
+            'pagecache',  // Web Page Caching
         ],
         'after' => [
+            'pagecache',   // Web Page Caching
             'performance', // Performance Metrics
             'toolbar',     // Debug Toolbar
         ],
@@ -73,15 +73,12 @@ class Filters extends BaseFilters
      */
     public array $globals = [
         'before' => [
-            // Full-page cache disabled globally: it can serve stale HTML before controllers run,
-            // breaking flash messages, CSRF flows, and admin screens. Enable per-route via $filters if needed.
-            // 'pagecache',
+            'installguard',
             // 'honeypot',
             // 'csrf',
             // 'invalidchars',
         ],
         'after' => [
-            // 'pagecache',
             // 'honeypot',
             // 'secureheaders',
         ],

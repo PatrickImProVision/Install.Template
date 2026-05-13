@@ -81,10 +81,8 @@ class Paths
      * ENVIRONMENT DIRECTORY NAME
      * ---------------------------------------------------------------
      *
-     * This variable must contain the name of the directory where
-     * the .env file is located.
-     * Please consider security implications when changing this
-     * value - the directory should not be publicly accessible.
+     * The application does not use .env. Point this to a non-existent
+     * internal directory so the framework does not load a root .env file.
      */
-    public string $envDirectory = __DIR__ . '/../../';
+    public string $envDirectory = __DIR__ . '/../NoEnv';
 }

@@ -1,392 +1,191 @@
+<?= $this->extend('layouts/site') ?>
+<?= $this->section('main') ?>
 <?php
-$fbIn = isset($dbFeedback) && is_array($dbFeedback) ? $dbFeedback : [];
-$s    = trim((string) ($fbIn['success'] ?? ''));
-$e    = trim((string) ($fbIn['error'] ?? ''));
-$errs = isset($fbIn['errors']) && is_array($fbIn['errors']) ? $fbIn['errors'] : [];
-
-if ($s === '' && $e === '' && $errs === []) {
-    $s = trim((string) (session()->getFlashdata('success') ?? ''));
-    $e = trim((string) (session()->getFlashdata('error') ?? ''));
-    $sf = session()->getFlashdata('errors');
-    $errs = is_array($sf) ? $sf : [];
-}
-
-$feedbackAnchorId = 'install-db-result';
-$pageTitle          = $title ?? 'Installation';
-if ($s !== '') {
-    $pageTitle = '[OK] ' . $pageTitle;
-} elseif ($e !== '') {
-    $pageTitle = '[ERR] ' . $pageTitle;
-} elseif ($errs !== []) {
-    $pageTitle = '[FIX] ' . $pageTitle;
-}
+/** @var list<string> $drivers */
+$oldDriver = old('DBDriver', 'MySQLi', false);
+$mode = ($mode ?? 'install') === 'restore' ? 'restore' : 'install';
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title><?= esc($pageTitle) ?></title>
-    <style>
-        :root {
-            --bg: #0f1419;
-            --panel: #1a2332;
-            --text: #e7eef8;
-            --muted: #8b9cb3;
-            --accent: #3d8bfd;
-            --danger: #f87171;
-            --ok: #34d399;
-        }
-        * { box-sizing: border-box; }
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-            background: radial-gradient(1200px 600px at 20% -10%, #1e3a5f 0%, transparent 55%), var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-        }
-        .wrap {
-            max-width: min(94vw, 880px);
-            margin: 0 auto;
-            padding: 2rem 1.25rem 3rem;
-        }
-        .card {
-            background: var(--panel);
-            border-radius: 12px;
-            padding: 1.75rem;
-            box-shadow: 0 18px 50px rgba(0, 0, 0, 0.35);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-        }
-        h1 {
-            font-size: 1.35rem;
-            font-weight: 600;
-            margin: 0 0 0.35rem;
-            letter-spacing: -0.02em;
-        }
-        .sub {
-            color: var(--muted);
-            font-size: 0.9rem;
-            margin: 0 0 1.5rem;
-        }
-        label {
-            display: block;
-            font-size: 0.82rem;
-            font-weight: 500;
-            margin: 0 0 0.35rem;
-            color: var(--muted);
-        }
-        input[type="text"], input[type="password"], input[type="number"], input[type="email"], textarea,
-        select {
-            width: 100%;
-            padding: 0.65rem 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(0, 0, 0, 0.25);
-            color: var(--text);
-            margin-bottom: 1rem;
-        }
-        select { cursor: pointer; }
-        textarea { min-height: 72px; resize: vertical; }
-        input:focus, textarea:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 3px rgba(61, 139, 253, 0.25);
-        }
-        .row {
-            display: flex;
-            gap: 0.75rem;
-        }
-        .row > div { flex: 1; min-width: 0; }
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 0.5rem 1.25rem;
-            align-items: start;
-        }
-        .form-grid > .stack {
-            display: flex;
-            flex-direction: column;
-            min-width: 0;
-        }
-        .form-grid > .stack input,
-        .form-grid > .stack select,
-        .form-grid > .stack textarea {
-            margin-bottom: 0;
-        }
-        .form-grid .full {
-            grid-column: 1 / -1;
-        }
-        .form-grid.form-host-port {
-            grid-template-columns: minmax(0, 2fr) minmax(120px, 1fr);
-        }
-        .form-grid.form-db-prefix {
-            grid-template-columns: minmax(0, 2fr) minmax(140px, 1fr);
-        }
-        #server-fields {
-            display: flex;
-            flex-direction: column;
-            gap: 0.65rem;
-        }
-        @media (max-width: 640px) {
-            .form-grid,
-            .form-grid.form-host-port,
-            .form-grid.form-db-prefix {
-                grid-template-columns: 1fr;
-            }
-        }
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.6rem;
-            margin-top: 0.5rem;
-        }
-        .form-grid > .actions.full {
-            margin-top: 0.35rem;
-        }
-        button, .btn {
-            cursor: pointer;
-            border: none;
-            border-radius: 8px;
-            padding: 0.65rem 1rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-        }
-        button.primary, .btn.primary {
-            background: var(--accent);
-            color: #fff;
-        }
-        button.secondary {
-            background: rgba(255, 255, 255, 0.08);
-            color: var(--text);
-        }
-        .alert {
-            padding: 0.75rem 1rem;
-            border-radius: 8px;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-        }
-        .alert.err { background: rgba(248, 113, 113, 0.15); color: var(--danger); border: 1px solid rgba(248, 113, 113, 0.35); }
-        .alert.ok { background: rgba(52, 211, 153, 0.15); color: var(--ok); border: 1px solid rgba(52, 211, 153, 0.35); }
-        ul.errors {
-            margin: 0 0 1rem;
-            padding-left: 1.25rem;
-            color: var(--danger);
-            font-size: 0.88rem;
-        }
-        .steps {
-            font-size: 0.8rem;
-            color: var(--muted);
-            margin-bottom: 1.25rem;
-        }
-    </style>
-</head>
-<body>
-<?php if ($s !== ''): ?>
-<div id="<?= esc($feedbackAnchorId, 'attr') ?>" role="status" style="margin:0;width:100%;box-sizing:border-box;padding:14px 18px;background:#065f46;color:#ecfdf5;font-weight:700;font-size:15px;font-family:system-ui,sans-serif;border-bottom:4px solid #34d399;"><?= esc($s) ?></div>
-<?php elseif ($e !== ''): ?>
-<div id="<?= esc($feedbackAnchorId, 'attr') ?>" role="alert" style="margin:0;width:100%;box-sizing:border-box;padding:14px 18px;background:#7f1d1d;color:#fef2f2;font-weight:700;font-size:15px;font-family:system-ui,sans-serif;border-bottom:4px solid #f87171;"><?= esc($e) ?></div>
-<?php elseif ($errs !== []): ?>
-<div id="<?= esc($feedbackAnchorId, 'attr') ?>" role="alert" style="margin:0;width:100%;box-sizing:border-box;padding:14px 18px;background:#78350f;color:#fffbeb;font-weight:700;font-size:15px;font-family:system-ui,sans-serif;border-bottom:4px solid #fbbf24;">Please correct the errors below.</div>
-<?php endif; ?>
+<h1><?= esc($flowTitle ?? 'Installation Manager') ?></h1>
+<p class="lead"><?= $flowLead ?? 'Connect your database. Settings are written to <code>app/Config/Database.php</code> and read by <code>Config\Database</code>.' ?></p>
 
-<div class="wrap">
-    <div class="steps">Installation wizard</div>
+<?php if ($msg = session()->getFlashdata('message')) : ?>
+    <div class="ok"><?= esc($msg) ?></div>
+<?php endif ?>
+
+<?php if (! empty($errors)) : ?>
+    <div class="err">
+        <?php foreach ($errors as $field => $e) : ?>
+            <div><strong><?= esc((string) $field) ?>:</strong> <?= esc(is_array($e) ? implode(' ', $e) : (string) $e) ?></div>
+        <?php endforeach ?>
+    </div>
+<?php endif ?>
+
+<div id="test-result" class="hint" style="display:none;margin:0 0 1rem;" aria-live="polite"></div>
+
+<form method="post" action="<?= esc(site_url('install/database')) ?>" id="install-db-form">
+    <?= csrf_field() ?>
+    <input type="hidden" name="install_mode" value="<?= esc($mode, 'attr') ?>">
     <div class="card">
-        <?php if (! empty($errs)): ?>
-            <ul class="errors" role="alert">
-                <?php foreach ($errs as $err): ?>
-                    <li><?= esc(is_array($err) ? implode(' ', $err) : $err) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php endif; ?>
+        <label for="baseURL">Site base URL (optional)</label>
+        <input type="url" name="baseURL" id="baseURL" value="<?= old('baseURL', 'http://localhost/Product.Store/', 'attr') ?>"
+               placeholder="http://localhost/Product.Store/">
+        <p class="hint">Include trailing slash. Writes <code>Config\App::$baseURL</code> for links and redirects.</p>
 
-<h1>Database</h1>
-<p class="sub">Each button is a normal form submit (works without JavaScript). Entries are also saved in your browser.</p>
-
-<script>
-<?php
-$pJson = json_encode($prefill ?? [], JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
-if ($pJson === false) {
-    $pJson = '{}';
-}
-?>
-window.INSTALL_DB_FROM_SERVER = <?= $pJson ?>;
-</script>
-
-<?= form_open('', ['novalidate' => true, 'id' => 'install-database-form']) ?>
-
-<div class="form-grid">
-    <div class="stack full">
-        <label for="driver">Driver</label>
-        <select name="driver" id="driver" required>
-            <?php foreach ($driverChoices as $value => $label) : ?>
-                <option value="<?= esc($value) ?>" <?= ($prefill['driver'] ?? '') === $value ? 'selected' : '' ?>><?= esc($label) ?></option>
-            <?php endforeach; ?>
+        <label for="DBDriver">Database driver</label>
+        <select name="DBDriver" id="DBDriver" required>
+            <?php foreach ($drivers as $d) : ?>
+                <option value="<?= esc($d, 'attr') ?>" <?= $oldDriver === $d ? 'selected' : '' ?>><?= esc($d) ?></option>
+            <?php endforeach ?>
         </select>
-    </div>
 
-    <div id="server-fields" class="full">
-        <div class="form-grid form-host-port">
-            <div class="stack">
+        <div class="row row-host-port" id="host-port-row">
+            <div>
                 <label for="hostname">Host name</label>
-                <input type="text" name="hostname" id="hostname" value="<?= esc($prefill['hostname'] ?? '') ?>" autocomplete="off">
+                <input type="text" name="hostname" id="hostname" value="<?= old('hostname', 'localhost', 'attr') ?>">
             </div>
-            <div class="stack">
+            <div>
                 <label for="port">Port</label>
-                <input type="number" name="port" id="port" value="<?= esc($prefill['port'] ?? '3306') ?>" min="1" max="65535">
+                <input type="number" name="port" id="port" value="<?= old('port', '3306', 'attr') ?>">
             </div>
         </div>
-        <div class="form-grid">
-            <div class="stack">
+
+        <div id="schema-wrap" style="display:none;">
+            <label for="schema">PostgreSQL schema</label>
+            <input type="text" name="schema" id="schema" value="<?= old('schema', 'public', 'attr') ?>">
+        </div>
+
+        <div class="row row-db-prefix" id="db-prefix-row">
+            <div>
+                <label for="database" id="database-label">Database name</label>
+                <input type="text" name="database" id="database" value="<?= old('database', '', 'attr') ?>"
+                       placeholder="product_store" required>
+                <p class="hint" id="database-hint"></p>
+            </div>
+            <div>
+                <label for="DBPrefix">Table prefix</label>
+                <input type="text" name="DBPrefix" id="DBPrefix" value="<?= old('DBPrefix', '', 'attr') ?>"
+                       maxlength="64" autocomplete="off" placeholder="ps_" required>
+            </div>
+        </div>
+        <p class="hint" style="margin-top:0.15rem;">Prefix is required: letters, digits, and underscore only. CodeIgniter prepends it to logical table names (e.g. <code>users</code> → <code>ps_users</code> with <code>ps_</code>). Preset SQL uses it when you run schema.</p>
+
+        <div id="auth-fields" class="row row-user-pass">
+            <div>
                 <label for="username">User name</label>
-                <input type="text" name="username" id="username" value="<?= esc($prefill['username'] ?? '') ?>" autocomplete="username">
+                <input type="text" name="username" id="username" value="<?= old('username', '', 'attr') ?>">
             </div>
-            <div class="stack">
+            <div>
                 <label for="password">Password</label>
-                <input type="password" name="password" id="password" value="<?= esc($prefill['password'] ?? '') ?>" autocomplete="new-password">
+                <div class="field-password">
+                    <input type="password" name="password" id="password" value="<?= old('password', '', 'attr') ?>" autocomplete="new-password">
+                    <button type="button" class="password-toggle" id="password-toggle" aria-label="Show password" aria-pressed="false">Show</button>
+                </div>
             </div>
         </div>
-    </div>
 
-    <div class="form-grid form-db-prefix full">
-        <div class="stack">
-            <label for="database" id="database-label">Database name</label>
-            <input type="text" name="database" id="database" value="<?= esc($prefill['database'] ?? '') ?>" autocomplete="off">
-        </div>
-        <div class="stack">
-            <label for="DBPrefix">Table prefix</label>
-            <input type="text" name="DBPrefix" id="DBPrefix" value="<?= esc($prefill['DBPrefix'] ?? '') ?>" maxlength="64" placeholder="optional, e.g. ci_" pattern="[A-Za-z0-9_]*" autocomplete="off">
+        <div class="actions">
+            <button type="button" class="btn btn-secondary" id="btn-test">Test connection</button>
+            <button type="submit" class="btn btn-primary"><?= esc($submitLabel ?? 'Save & continue') ?></button>
         </div>
     </div>
-    <p class="sub full" id="database-hint" style="display:none;margin-top:-0.35rem;">Use an absolute path if possible; the file is created if missing.</p>
-
-    <div id="schema-row" class="stack full" style="display:none;">
-        <label for="schema">Schema</label>
-        <input type="text" name="schema" id="schema" value="<?= esc($prefill['schema'] ?? '') ?>" placeholder="public or dbo" maxlength="128" autocomplete="off">
-    </div>
-
-    <p class="sub full" style="margin-top:-0.35rem;">Letters, numbers, and underscores only. Leave empty for no prefix. Models still use unprefixed logical names (<code>users</code>, <code>site_settings</code>); preset SQL is adjusted on import.</p>
-
-    <div class="actions full">
-        <button type="submit" name="install_btn" value="test" class="secondary">Test connection</button>
-        <button type="submit" name="install_btn" value="save" class="primary">Save &amp; continue</button>
-    </div>
-</div>
-
-<?= form_close() ?>
+</form>
 
 <script>
 (function () {
-    var STORAGE_KEY = 'RemoteConnectionTest_ci4_install_database_v1';
-    var sqliteDefaultPath = <?= json_encode(WRITEPATH . 'database.sqlite', JSON_HEX_TAG | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE) ?: '""' ?>;
-    var form = document.getElementById('install-database-form');
-    var server = window.INSTALL_DB_FROM_SERVER || {};
-    var names = ['driver', 'hostname', 'port', 'username', 'password', 'database', 'schema', 'DBPrefix'];
+    const hostPortRow = document.getElementById('host-port-row');
+    const driver = document.getElementById('DBDriver');
+    const hostname = document.getElementById('hostname');
+    const port = document.getElementById('port');
+    const schemaWrap = document.getElementById('schema-wrap');
+    const auth = document.getElementById('auth-fields');
+    const passwordToggle = document.getElementById('password-toggle');
+    const dbLabel = document.getElementById('database-label');
+    const dbHint = document.getElementById('database-hint');
+    const database = document.getElementById('database');
 
-    function loadStored() {
+    function sync(fromDriverChange) {
+        const d = driver.value;
+        const isSql = d === 'SQLite3';
+        hostname.disabled = isSql;
+        port.disabled = isSql;
+        if (hostPortRow) {
+            hostPortRow.style.opacity = isSql ? '0.45' : '1';
+        }
+        auth.querySelectorAll('input').forEach(i => { i.disabled = isSql; });
+        if (passwordToggle) {
+            passwordToggle.disabled = isSql;
+        }
+        auth.style.opacity = isSql ? '0.45' : '1';
+        schemaWrap.style.display = d === 'Postgre' ? 'block' : 'none';
+        const sch = document.getElementById('schema');
+        sch.disabled = d !== 'Postgre';
+        if (fromDriverChange) {
+            if (d === 'Postgre' && (port.value === '3306' || port.value === '')) {
+                port.value = '5432';
+            }
+            if (d === 'MySQLi' && port.value === '5432') {
+                port.value = '3306';
+            }
+        }
+        dbLabel.textContent = isSql ? 'Database file path' : 'Database name';
+        database.placeholder = isSql ? '<?= esc(WRITEPATH) ?>product_store.db' : 'product_store';
+        dbHint.textContent = isSql
+            ? 'Absolute path to the SQLite file. The directory must exist and be writable.'
+            : '';
+    }
+    driver.addEventListener('change', function () {
+        sync(true);
+    });
+    sync(false);
+
+    if (passwordToggle) {
+        const pwdInput = document.getElementById('password');
+        passwordToggle.addEventListener('click', function () {
+            if (! pwdInput || pwdInput.disabled) {
+                return;
+            }
+            const show = pwdInput.type === 'password';
+            pwdInput.type = show ? 'text' : 'password';
+            passwordToggle.textContent = show ? 'Hide' : 'Show';
+            passwordToggle.setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+            passwordToggle.setAttribute('aria-pressed', show ? 'true' : 'false');
+        });
+    }
+
+    document.getElementById('btn-test').addEventListener('click', async function () {
+        const fd = new FormData(document.getElementById('install-db-form'));
+        const el = document.getElementById('test-result');
+        el.style.display = 'block';
+        el.className = 'hint';
+        el.textContent = 'Testing…';
+        el.style.color = 'var(--muted)';
         try {
-            var j = localStorage.getItem(STORAGE_KEY);
-            return j ? JSON.parse(j) : null;
+            const r = await fetch('<?= site_url('install/test-connection') ?>', {
+                method: 'POST',
+                body: fd,
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            });
+            const j = await r.json();
+            el.className = j.ok ? 'ok' : 'err';
+            el.innerHTML = j.ok
+                ? '<strong>Connection successful.</strong> Database credentials are valid.'
+                : '<strong>Connection failed.</strong> ' + escapeHtml(j.error || 'Unknown error.');
+            el.style.color = '';
         } catch (e) {
-            return null;
+            el.innerHTML = '<strong>Connection failed.</strong> Request failed.';
+            el.className = 'err';
+            el.style.color = '';
         }
-    }
+    });
 
-    function saveStored() {
-        if (!form) return;
-        var o = {};
-        names.forEach(function (n) {
-            var el = form.elements[n];
-            if (el) {
-                o[n] = el.value;
-            }
-        });
-        try {
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(o));
-        } catch (e) {}
-    }
-
-    function mergeBrowserAndServer() {
-        if (!form) return;
-        var stored = loadStored();
-        names.forEach(function (n) {
-            var el = form.elements[n];
-            if (!el) return;
-            var sv = server[n] != null ? String(server[n]) : '';
-            var st = stored && stored[n] != null ? String(stored[n]) : '';
-            if (st !== '') {
-                el.value = st;
-            } else if (sv !== '') {
-                el.value = sv;
-            }
-        });
-    }
-
-    var driverEl = document.getElementById('driver');
-    var serverEl = document.getElementById('server-fields');
-    var schemaEl = document.getElementById('schema-row');
-    var portEl = document.getElementById('port');
-    var dbEl = document.getElementById('database');
-    var dbLabel = document.getElementById('database-label');
-    var dbHint = document.getElementById('database-hint');
-
-    function syncDisplay() {
-        if (!driverEl) return;
-        var v = driverEl.value;
-        var sqlite = v === 'SQLite3';
-        serverEl.style.display = sqlite ? 'none' : 'block';
-        schemaEl.style.display = (v === 'Postgre' || v === 'SQLSRV') ? 'block' : 'none';
-        dbLabel.textContent = sqlite ? 'Database file path' : 'Database name';
-        dbHint.style.display = sqlite ? 'block' : 'none';
-        dbEl.placeholder = (sqlite && !dbEl.value) ? sqliteDefaultPath : '';
-    }
-
-    function applyDriverPortDefaults() {
-        if (!driverEl || !portEl) return;
-        var v = driverEl.value;
-        if (v === 'SQLite3') {
-            return;
-        }
-        if (v === 'Postgre' && (!portEl.value || portEl.value === '3306' || portEl.value === '1433')) {
-            portEl.value = '5432';
-        }
-        if (v === 'SQLSRV' && (!portEl.value || portEl.value === '3306' || portEl.value === '5432')) {
-            portEl.value = '1433';
-        }
-        if (v === 'MySQLi' && (!portEl.value || portEl.value === '5432' || portEl.value === '1433')) {
-            portEl.value = '3306';
-        }
-    }
-
-    mergeBrowserAndServer();
-    syncDisplay();
-
-    if (driverEl) {
-        driverEl.addEventListener('change', function () {
-            applyDriverPortDefaults();
-            syncDisplay();
-            saveStored();
-        });
-    }
-
-    if (form) {
-        form.addEventListener('input', saveStored);
-        form.addEventListener('change', saveStored);
-        form.addEventListener('submit', saveStored);
-    }
-
-    var resultEl = document.getElementById('install-db-result');
-    if (resultEl) {
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    function escapeHtml(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
     }
 })();
 </script>
-    </div>
-</div>
-</body>
-</html>
+<?= $this->endSection() ?>

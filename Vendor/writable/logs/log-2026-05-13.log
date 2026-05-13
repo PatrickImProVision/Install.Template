@@ -1,0 +1,173 @@
+ERROR - 2026-05-13 03:52:44 --> pg_query(): Query failed: 
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 3 APPPATH\Libraries\InstallationService.php(392): CodeIgniter\Database\BaseConnection->query('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 4 APPPATH\Libraries\InstallationService.php(338): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows; recreate schema via installer SQL or pg_dump if needed)
+DROP TABLE IF EXISTS "ps_users" CASCADE;
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL);')
+ 5 APPPATH\Controllers\Install.php(191): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_035121.sql')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 04:29:43 --> pg_query(): Query failed: 
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 3 APPPATH\Libraries\InstallationService.php(406): CodeIgniter\Database\BaseConnection->query('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 4 APPPATH\Libraries\InstallationService.php(342): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows; recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL);')
+ 5 APPPATH\Controllers\Install.php(191): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_035121.sql')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 04:32:56 --> pg_query(): Query failed: 
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 3 APPPATH\Libraries\InstallationService.php(406): CodeIgniter\Database\BaseConnection->query('-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows')
+ 4 APPPATH\Libraries\InstallationService.php(342): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows; recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL);')
+ 5 APPPATH\Controllers\Install.php(191): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_035121.sql')
+ 6 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 7 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 8 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 9 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+10 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+11 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+12 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 04:35:47 --> pg_query(): Query failed: ERROR:  syntax error at or near &quot;recreate&quot;
+LINE 1: recreate schema via installer SQL or pg_dump if needed)
+        ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL)')
+ 2 APPPATH\Libraries\InstallationService.php(413): CodeIgniter\Database\BaseConnection->simpleQuery('recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL)')
+ 3 APPPATH\Libraries\InstallationService.php(343): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows; recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL);')
+ 4 APPPATH\Controllers\Install.php(191): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_035121.sql')
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 04:38:38 --> pg_query(): Query failed: ERROR:  relation &quot;ps_users&quot; does not exist
+LINE 1: INSERT INTO &quot;ps_users&quot; (&quot;id&quot;,&quot;username&quot;,&quot;email&quot;,&quot;password_ha...
+                    ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL)')
+ 2 APPPATH\Libraries\InstallationService.php(413): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL)')
+ 3 APPPATH\Libraries\InstallationService.php(343): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T03:51:21+00:00
+
+-- Table ps_users (data rows; recreate schema via installer SQL or pg_dump if needed)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$d3CSnnjz.Rn6PGosdSnrqeeMabnTaCAk2R/xoxEReA2gdVeh.neKy\',\'administrator\',\'2026-05-12 20:18:22\',NULL);')
+ 4 APPPATH\Controllers\Install.php(191): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_035121.sql')
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 04:57:39 --> pg_query(): Query failed: ERROR:  relation &quot;ps_users&quot; does not exist
+LINE 1: INSERT INTO &quot;ps_users&quot; (&quot;id&quot;,&quot;username&quot;,&quot;email&quot;,&quot;password_ha...
+                    ^
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$UKJMCCF5UrMAIOtRuHJHzu9khxAygKtDGaONgQspcnHeHGAmGfAii\',\'administrator\',\'2026-05-13 04:40:09\',NULL)')
+ 2 APPPATH\Libraries\InstallationService.php(413): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$UKJMCCF5UrMAIOtRuHJHzu9khxAygKtDGaONgQspcnHeHGAmGfAii\',\'administrator\',\'2026-05-13 04:40:09\',NULL)')
+ 3 APPPATH\Libraries\InstallationService.php(343): App\Libraries\InstallationService->executeSqlScript(Object(CodeIgniter\Database\Postgre\Connection), '-- Product Store backup 2026-05-13T04:49:02+00:00
+-- DBPrefix (Config\\Database): ps_
+-- Physical table identifiers (prefix + logical name as stored in the database):
+--   ps_users
+
+-- Table ps_users (data rows only — run preset install SQL first so tables exist.)
+INSERT INTO "ps_users" ("id","username","email","password_hash","role","created_at","updated_at") VALUES (\'1\',\'ImProVision.Man\',\'ImProVision.Man@outlook.com\',\'$2y$10$UKJMCCF5UrMAIOtRuHJHzu9khxAygKtDGaONgQspcnHeHGAmGfAii\',\'administrator\',\'2026-05-13 04:40:09\',NULL);')
+ 4 APPPATH\Controllers\Install.php(192): App\Libraries\InstallationService->restoreFromWritableUninstallBackup('uninstall_2026-05-13_044902.sql')
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->runSchema()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 05:05:27 --> pg_query(): Query failed: ERROR:  duplicate key value violates unique constraint &quot;ps_users_pkey&quot;
+DETAIL:  Key (id)=(1) already exists.
+in SYSTEMPATH\Database\Postgre\Connection.php on line 200.
+ 1 SYSTEMPATH\Database\BaseConnection.php(910): CodeIgniter\Database\Postgre\Connection->execute('INSERT INTO "ps_users" ("username", "email", "password_hash", "role", "created_at", "updated_at") VALUES (\'ImProVision.Man\', \'ImProVision.Man@outlook.com\', \'$2y$10$thId7YIBhqjJLuNjGWbRJ.iQn5AeBy9YxSNbifti5sNVhqlsUH0na\', \'administrator\', \'2026-05-13 05:05:26\', NULL)')
+ 2 SYSTEMPATH\Database\BaseConnection.php(827): CodeIgniter\Database\BaseConnection->simpleQuery('INSERT INTO "ps_users" ("username", "email", "password_hash", "role", "created_at", "updated_at") VALUES (\'ImProVision.Man\', \'ImProVision.Man@outlook.com\', \'$2y$10$thId7YIBhqjJLuNjGWbRJ.iQn5AeBy9YxSNbifti5sNVhqlsUH0na\', \'administrator\', \'2026-05-13 05:05:26\', NULL)')
+ 3 SYSTEMPATH\Database\BaseBuilder.php(2345): CodeIgniter\Database\BaseConnection->query('INSERT INTO "ps_users" ("username", "email", "password_hash", "role", "created_at", "updated_at") VALUES (:username:, :email:, :password_hash:, :role:, :created_at:, :updated_at:)', [...], false)
+ 4 APPPATH\Controllers\Install.php(257): CodeIgniter\Database\BaseBuilder->insert([...])
+ 5 SYSTEMPATH\CodeIgniter.php(951): App\Controllers\Install->saveAdmin()
+ 6 SYSTEMPATH\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+ 7 SYSTEMPATH\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(null, Object(Config\Cache), false)
+ 8 SYSTEMPATH\Boot.php(417): CodeIgniter\CodeIgniter->run()
+ 9 SYSTEMPATH\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+10 FCPATH\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+11 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps\\XamppPortable\\App\\Xampp\\htdocs\\Product.Store\\Vendor\\public\\index.php')
+ERROR - 2026-05-13 05:56:49 --> Error connecting to the database: mysqli_sql_exception: Access denied for user 'cluster51'@'localhost' (using password: YES) in P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\MySQLi\Connection.php:201
+Stack trace:
+#0 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\MySQLi\Connection.php(201): mysqli->real_connect('localhost', 'cluster51', Object(SensitiveParameterValue), 'store', 3306, '', 0)
+#1 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#2 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#3 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\app\Libraries\InstallationService.php(60): CodeIgniter\Database\BaseConnection->query('SELECT 1 AS ok')
+#4 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\app\Controllers\Install.php(164): App\Libraries\InstallationService->testConnection(Array)
+#5 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(951): App\Controllers\Install->testConnection()
+#6 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+#7 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#8 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#9 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#10 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#11 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps...')
+#12 {main}
+
+Next CodeIgniter\Database\Exceptions\DatabaseException: Access denied for user '****'@'localhost' (using password: YES) in P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\MySQLi\Connection.php:231
+Stack trace:
+#0 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\BaseConnection.php(555): CodeIgniter\Database\MySQLi\Connection->connect(false)
+#1 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Database\BaseConnection.php(795): CodeIgniter\Database\BaseConnection->initialize()
+#2 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\app\Libraries\InstallationService.php(60): CodeIgniter\Database\BaseConnection->query('SELECT 1 AS ok')
+#3 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\app\Controllers\Install.php(164): App\Libraries\InstallationService->testConnection(Array)
+#4 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(951): App\Controllers\Install->testConnection()
+#5 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(497): CodeIgniter\CodeIgniter->runController(Object(App\Controllers\Install))
+#6 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\CodeIgniter.php(340): CodeIgniter\CodeIgniter->handleRequest(NULL, Object(Config\Cache), false)
+#7 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Boot.php(417): CodeIgniter\CodeIgniter->run()
+#8 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\system\Boot.php(68): CodeIgniter\Boot::runCodeIgniter(Object(CodeIgniter\CodeIgniter))
+#9 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\Vendor\public\index.php(59): CodeIgniter\Boot::bootWeb(Object(Config\Paths))
+#10 P:\PortableApps\XamppPortable\App\Xampp\htdocs\Product.Store\index.php(13): require('P:\\PortableApps...')
+#11 {main}

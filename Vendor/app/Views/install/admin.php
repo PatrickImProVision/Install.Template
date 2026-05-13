@@ -1,55 +1,63 @@
-<?= $this->extend('install/layout') ?>
+<?= $this->extend('layouts/site') ?>
+<?= $this->section('main') ?>
+<h1>Administrator account</h1>
+<p class="lead">Create the first user with the <code>administrator</code> role.</p>
 
-<?= $this->section('content') ?>
-<h1>Administrator</h1>
-<p class="sub">Create the first administrator account for this site.</p>
-
-<?= form_open(site_url('install/admin')) ?>
-
-<div class="form-grid">
-    <div class="stack full">
-        <label for="email">Email</label>
-        <input type="email" name="email" id="email" value="<?= esc(old('email')) ?>" required autocomplete="email">
+<?php if (! empty($errors)) : ?>
+    <div class="err">
+        <?php foreach ($errors as $k => $e) : ?>
+            <div><strong><?= esc((string) $k) ?>:</strong> <?= esc(is_array($e) ? implode(' ', $e) : (string) $e) ?></div>
+        <?php endforeach ?>
     </div>
-    <div class="stack">
-        <label for="password">Password</label>
-        <div class="pw-field">
-            <input type="password" name="password" id="password" required minlength="8" autocomplete="new-password">
-            <button type="button" class="pw-toggle" data-pw-target="password" aria-label="Show password" aria-pressed="false">Show</button>
+<?php endif ?>
+
+<form method="post" action="<?= esc(site_url('install/admin')) ?>" class="card">
+    <?= csrf_field() ?>
+    <label for="username">Username</label>
+    <input type="text" name="username" id="username" value="<?= old('username', '', 'attr') ?>" required minlength="3">
+
+    <label for="email">E-mail</label>
+    <input type="email" name="email" id="email" value="<?= old('email', '', 'attr') ?>" required>
+
+    <div class="row row-user-pass">
+        <div>
+            <label for="password">Password</label>
+            <div class="field-password">
+                <input type="password" name="password" id="password" value="<?= old('password', '', 'attr') ?>" required minlength="8" autocomplete="new-password">
+                <button type="button" class="password-toggle" id="admin-password-toggle" aria-label="Show password" aria-pressed="false">Show</button>
+            </div>
+        </div>
+        <div>
+            <label for="password_confirm">Confirm password</label>
+            <div class="field-password">
+                <input type="password" name="password_confirm" id="password_confirm" value="<?= old('password_confirm', '', 'attr') ?>" required minlength="8" autocomplete="new-password">
+                <button type="button" class="password-toggle" id="admin-password-confirm-toggle" aria-label="Show confirm password" aria-pressed="false">Show</button>
+            </div>
         </div>
     </div>
-    <div class="stack">
-        <label for="password_confirm">Confirm password</label>
-        <div class="pw-field">
-            <input type="password" name="password_confirm" id="password_confirm" required minlength="8" autocomplete="new-password">
-            <button type="button" class="pw-toggle" data-pw-target="password_confirm" aria-label="Show confirm password" aria-pressed="false">Show</button>
-        </div>
+
+    <div class="actions">
+        <button type="submit" class="btn btn-primary">Save administrator</button>
     </div>
-</div>
-
-<div class="actions">
-    <button type="submit" class="primary">Create administrator</button>
-</div>
-
-<?= form_close() ?>
-
+</form>
 <script>
 (function () {
-    document.querySelectorAll('.pw-toggle[data-pw-target]').forEach(function (btn) {
+    function wire(toggleId, inputId, phrase) {
+        var btn = document.getElementById(toggleId);
+        var input = document.getElementById(inputId);
+        if (! btn || ! input) {
+            return;
+        }
         btn.addEventListener('click', function () {
-            var id = btn.getAttribute('data-pw-target');
-            var input = id ? document.getElementById(id) : null;
-            if (!input) {
-                return;
-            }
-            var showing = input.type === 'password';
-            input.type = showing ? 'text' : 'password';
-            btn.textContent = showing ? 'Hide' : 'Show';
-            btn.setAttribute('aria-pressed', showing ? 'true' : 'false');
-            var base = id === 'password_confirm' ? 'confirm password' : 'password';
-            btn.setAttribute('aria-label', showing ? 'Hide ' + base : 'Show ' + base);
+            var show = input.type === 'password';
+            input.type = show ? 'text' : 'password';
+            btn.textContent = show ? 'Hide' : 'Show';
+            btn.setAttribute('aria-label', (show ? 'Hide ' : 'Show ') + phrase);
+            btn.setAttribute('aria-pressed', show ? 'true' : 'false');
         });
-    });
+    }
+    wire('admin-password-toggle', 'password', 'password');
+    wire('admin-password-confirm-toggle', 'password_confirm', 'confirm password');
 })();
 </script>
 <?= $this->endSection() ?>

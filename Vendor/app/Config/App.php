@@ -16,7 +16,7 @@ class App extends BaseConfig
      *
      * E.g., http://example.com/
      */
-    public string $baseURL = 'http://www.interaktive-hub.net/';
+    public string $baseURL = 'http://localhost/Product.Store/';
 
     /**
      * Allowed Hostnames in the Site URL other than the hostname in the baseURL.
@@ -29,7 +29,7 @@ class App extends BaseConfig
      *
      * @var list<string>
      */
-    public array $allowedHostnames = ['interaktive-hub.net', 'www.interaktive-hub.net', 'localhost'];
+    public array $allowedHostnames = [];
 
     /**
      * --------------------------------------------------------------------------
@@ -81,7 +81,7 @@ class App extends BaseConfig
     | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
     |
     */
-    public string $permittedURIChars = 'a-z A-Z 0-9_~%.:\-';
+    public string $permittedURIChars = 'a-z 0-9~%.:_\-';
 
     /**
      * --------------------------------------------------------------------------
@@ -199,4 +199,5 @@ class App extends BaseConfig
      * @see http://www.w3.org/TR/CSP/
      */
     public bool $CSPEnabled = false;
+
 }

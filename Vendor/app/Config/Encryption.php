@@ -33,9 +33,6 @@ class Encryption extends BaseConfig
      * the current $key. Decryption tries current key first, then falls back
      * to previous keys if decryption fails.
      *
-     * In .env file, use comma-separated string:
-     *   encryption.previousKeys = hex2bin:9be8c64fcea509867...,hex2bin:3f5a1d8e9c2b7a4f6...
-     *
      * @var list<string>|string
      */
     public array|string $previousKeys = '';

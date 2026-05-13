@@ -1,56 +1,25 @@
-<!DOCTYPE html>
-<html lang="en">
-<?php
-$heroTitle = trim((string) ($siteName ?? ''));
-$heroLead  = (! empty($installed) && ! empty($siteDescription))
-    ? trim((string) $siteDescription)
-    : '';
-$seo       = $seo ?? ['title' => '', 'description' => '', 'keywords' => ''];
-$pageTitle = trim((string) ($seo['title'] ?? ''));
-if ($pageTitle === '') {
-    $pageTitle = $heroTitle !== '' ? $heroTitle : 'Home';
-}
-?>
-<head>
-    <meta charset="UTF-8">
-    <title><?= esc($pageTitle) ?></title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="<?= esc((string) ($seo['description'] ?? '')) ?>">
-    <meta name="keywords" content="<?= esc((string) ($seo['keywords'] ?? '')) ?>">
-    <link rel="shortcut icon" type="image/png" href="/favicon.ico">
+<?= $this->extend('layouts/site') ?>
+<?= $this->section('main') ?>
+<?php if ($msg = session()->getFlashdata('message')): ?>
+    <div class="ok"><?= esc($msg) ?></div>
+<?php endif ?>
 
-    <style {csp-style-nonce}>
-<?= view('partials/site_theme_styles') ?>
-    </style>
-</head>
-<body>
+<h1>Product Store</h1>
+<p class="lead">CodeIgniter 4 application with an installation wizard, preset SQL, and guarded routes until install completes.</p>
 
-<div class="site-main">
-<?= view('partials/site_header', ['installed' => $installed, 'siteName' => $siteName]) ?>
-
-<section class="hero" id="home" aria-labelledby="hero-title">
-    <div class="hero-inner">
-        <h1 id="hero-title"><?= esc($heroTitle !== '' ? $heroTitle : 'Welcome') ?></h1>
-        <?php if ($heroLead !== '') : ?>
-            <p class="tagline"><?= esc($heroLead) ?></p>
-        <?php endif; ?>
-    </div>
-</section>
-
+<div class="card prose">
+    <h2>Getting started</h2>
+    <p>This page is rendered from <code>app/Views/welcome_message.php</code> using the same layout and theme as the installer (<code>app/Views/layouts/site.php</code>).</p>
+    <p>Application code lives under <code>Vendor/app/</code>; the public entry point is <code>Vendor/public/</code>.</p>
 </div>
 
-<?= view('partials/site_footer') ?>
+<div class="card prose">
+    <h2>Installation</h2>
+    <p><a href="<?= site_url('install') ?>">Open the installation wizard</a> to configure the database, run presets, and create an admin user.</p>
+    <?php if (\App\Libraries\InstallationState::isInstalled()): ?>
+        <p><a href="<?= site_url('install/uninstall') ?>">Uninstall</a> (backup, drop database, or remove flag only).</p>
+    <?php endif ?>
+</div>
 
-<?php if (! empty($scrollTo)) : ?>
-<script {csp-script-nonce}>
-document.addEventListener('DOMContentLoaded', function () {
-    var el = document.getElementById(<?= json_encode($scrollTo, JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT) ?>);
-    if (el) {
-        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-});
-</script>
-<?php endif; ?>
-
-</body>
-</html>
+<p class="meta">Environment: <?= esc(ENVIRONMENT) ?> · Page rendered in {elapsed_time} seconds using {memory_usage} MB of memory.</p>
+<?= $this->endSection() ?>
